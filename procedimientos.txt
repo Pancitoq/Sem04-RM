@@ -1,0 +1,61 @@
+CREATE PROCEDURE CrearCategoria
+	@idcategoria NVARCHAR(10),
+    @nombrecategoria NVARCHAR(100),
+    @descripcion NVARCHAR(255),
+    @CodCategoria NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO categorias (idcategoria, nombrecategoria, descripcion, Activo, CodCategoria)
+    VALUES (@idcategoria,@nombrecategoria, @descripcion, 1, @CodCategoria);
+END;
+
+EXEC CrearCategoria 
+	@idcategoria = 14,
+    @nombrecategoria = 'Comida',
+    @descripcion = 'Categoría de alimentos',
+    @CodCategoria = 'C001';
+
+CREATE PROCEDURE ActualizarCategoria
+    @idcategoria INT,
+    @nombrecategoria NVARCHAR(100),
+    @descripcion NVARCHAR(255),
+    @CodCategoria NVARCHAR(50)
+AS
+BEGIN
+    UPDATE categorias
+    SET nombrecategoria = @nombrecategoria,
+        descripcion = @descripcion,
+        CodCategoria = @CodCategoria
+    WHERE idcategoria = @idcategoria;
+END;
+
+EXEC ActualizarCategoria 
+    @idcategoria = 1,
+    @nombrecategoria = 'Bebidas',
+    @descripcion = 'Categoría de bebidas actualizada',
+    @CodCategoria = 'C002'
+
+
+CREATE PROCEDURE ListarCategorias
+AS
+BEGIN
+    SELECT idcategoria, nombrecategoria, descripcion, Activo, CodCategoria
+    FROM categorias;
+END;
+
+EXEC ListarCategorias;
+
+
+CREATE PROCEDURE BorrarCategoria
+    @idcategoria INT
+AS
+BEGIN
+    UPDATE categorias
+    SET Activo = 0
+    WHERE idcategoria = @idcategoria;
+END;
+
+
+EXEC BorrarCategoria 
+    @idcategoria = 1;
+
